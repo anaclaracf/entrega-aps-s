@@ -72,8 +72,6 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
 
             add(entrada1, 30, 72, 20, 25);
             add(entrada2, 30, 132, 20, 25);
-
-
         }
 
 
@@ -89,7 +87,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         } else if (gate.toString().equals("AND3")) {
             gate.connect(0, entradaSwitch1);
             gate.connect(1, entradaSwitch2);
-            gate.connect(1, entradaSwitch3);
+            gate.connect(2, entradaSwitch3);
 
         }else {
             gate.connect(0, entradaSwitch1);
@@ -115,22 +113,22 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         resposta2 = entrada2.isSelected();
         resposta3 = entrada3.isSelected();
 
-        if (resposta1 && resposta2) {
+        if (resposta1 && resposta2 && resposta3) {
             entradaSwitch1.turnOn();
             entradaSwitch2.turnOn();
             entradaSwitch3.turnOn();
         } else if (resposta2) {
             entradaSwitch1.turnOff();
             entradaSwitch2.turnOn();
-            entradaSwitch3.turnOn();
+            entradaSwitch3.turnOff();
         } else if (resposta1) {
             entradaSwitch1.turnOn();
             entradaSwitch2.turnOff();
             entradaSwitch3.turnOff();
         }else if (resposta3) {
-            entradaSwitch1.turnOn();
+            entradaSwitch1.turnOff();
             entradaSwitch2.turnOff();
-            entradaSwitch3.turnOff();
+            entradaSwitch3.turnOn();
         } else {
             entradaSwitch1.turnOff();
             entradaSwitch2.turnOff();
