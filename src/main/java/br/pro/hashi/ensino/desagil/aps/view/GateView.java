@@ -13,12 +13,14 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     private final Gate gate;
     private final JCheckBox entrada1;
     private final JCheckBox entrada2;
+    private final JCheckBox entrada3;
 
     //    private final JCheckBox saida;
     private final Image image;
     private final Light light;
     private final Switch entradaSwitch1;
     private final Switch entradaSwitch2;
+    private final Switch entradaSwitch3;
 
 
     public GateView(Gate gate) {
@@ -33,9 +35,14 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         entrada2.setMnemonic(KeyEvent.VK_G);
         entrada2.setSelected(false);
 
+        entrada3 = new JCheckBox();
+        entrada3.setMnemonic(KeyEvent.VK_G);
+        entrada3.setSelected(false);
+
 
         entradaSwitch1 = new Switch();
         entradaSwitch2 = new Switch();
+        entradaSwitch3 = new Switch();
 
 //        saida = new JCheckBox();
 //        saida.setMnemonic(KeyEvent.VK_G);
@@ -46,22 +53,25 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
 
         if (gate.toString().equals("NOT")) {
 
-            add(entrada1, 25, 102, 150, 25);
-            add(entrada2, 85, 45, 150, 25);
+            add(entrada1, 25, 102, 20, 25);
+            add(entrada2, 85, 45, 20, 25);
 
 
         } else if (gate.toString().equals("OR")) {
 
+            add(entrada1, 30, 67, 20, 25);
+            add(entrada2, 30, 137, 20, 25);
 
-            add(entrada1, 30, 67, 150, 25);
-            add(entrada2, 30, 137, 150, 25);
+        } else if (gate.toString().equals("AND3")){
 
+            add(entrada1, 30, 65, 20, 25);
+            add(entrada2, 30, 105, 20, 25);
+            add(entrada3, 30, 145, 20, 25);
 
         } else {
 
-
-            add(entrada1, 30, 72, 150, 25);
-            add(entrada2, 30, 132, 150, 25);
+            add(entrada1, 30, 72, 20, 25);
+            add(entrada2, 30, 132, 20, 25);
 
 
         }
@@ -75,13 +85,20 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
             gate.connect(0, entradaSwitch1);
             entrada2.setEnabled(false);
             remove(entrada2);
-        } else {
+
+        } else if (gate.toString().equals("AND3")) {
+            gate.connect(0, entradaSwitch1);
+            gate.connect(1, entradaSwitch2);
+            gate.connect(1, entradaSwitch3);
+
+        }else {
             gate.connect(0, entradaSwitch1);
             gate.connect(1, entradaSwitch2);
         }
 
         entrada1.addItemListener(this);
         entrada2.addItemListener(this);
+        entrada3.addItemListener(this);
 
 
         addMouseListener(this);
@@ -92,22 +109,32 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     private void update() {
         boolean resposta1;
         boolean resposta2;
+        boolean resposta3;
 
         resposta1 = entrada1.isSelected();
         resposta2 = entrada2.isSelected();
+        resposta3 = entrada3.isSelected();
 
         if (resposta1 && resposta2) {
             entradaSwitch1.turnOn();
             entradaSwitch2.turnOn();
+            entradaSwitch3.turnOn();
         } else if (resposta2) {
             entradaSwitch1.turnOff();
             entradaSwitch2.turnOn();
+            entradaSwitch3.turnOn();
         } else if (resposta1) {
             entradaSwitch1.turnOn();
             entradaSwitch2.turnOff();
+            entradaSwitch3.turnOff();
+        }else if (resposta3) {
+            entradaSwitch1.turnOn();
+            entradaSwitch2.turnOff();
+            entradaSwitch3.turnOff();
         } else {
             entradaSwitch1.turnOff();
             entradaSwitch2.turnOff();
+            entradaSwitch3.turnOff();
         }
 
 

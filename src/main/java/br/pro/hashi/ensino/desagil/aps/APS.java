@@ -14,6 +14,7 @@ public class APS {
         model.add(new OrGate());
         model.add(new XorGate());
         model.add(new NandGate());
+        model.add(new And3Gate());
 
         View view = new View(model);
 
